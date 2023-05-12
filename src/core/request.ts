@@ -209,6 +209,7 @@ export class Request {
       'X-IG-Android-ID': this.client.state.deviceId,
       'Accept-Language': this.client.state.language.replace('_', '-'),
       'X-FB-HTTP-Engine': 'Liger',
+      //'X-Google-AD-ID': '',
       Authorization: this.client.state.authorization,
       Host: 'i.instagram.com',
       'Accept-Encoding': 'gzip',
