@@ -31,24 +31,9 @@ export class DiscoverRepository extends Repository {
     return body;
   }
 
-  async explore(module: string = 'explore_popular') {
-    const { body } = await this.client.request.send({
-      url: '/api/v1/discover/explore/',
-      qs: {
-        is_prefetch: false,
-        is_from_promote: false,
-        timezone_offset: this.client.state.timezoneOffset,
-        session_id: this.client.state.clientSessionId,
-        supported_capabilities_new: this.client.state.supportedCapabilities,
-        module,
-      },
-    });
-    return body;
-  }
-
   async reportExploreMedia(mediaId: string) {
     const { body } = await this.client.request.send({
-      url: 'api/v1/discover/explore_report/',
+      url: '/api/v1/discover/explore_report/',
       qs: {
         m_pk: mediaId,
       }
