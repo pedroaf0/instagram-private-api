@@ -16,6 +16,19 @@ export class DiscoverRepository extends Repository {
     return body;
   }
 
+  async testClips(): Promise<any> {
+    const { body } = await this.client.request.send({
+      url: '/api/v1/clips/home/',
+      form: {
+        module: 'explore_popular_major_unit',
+        _csrftoken: this.client.state.cookieCsrfToken,
+        _uuid: this.client.state.uuid,
+      },
+      method: 'POST',
+    });
+    return body;
+  }
+
   async topicalExplore() {
     const { body } = await this.client.request.send({
       url: '/api/v1/discover/topical_explore/',
