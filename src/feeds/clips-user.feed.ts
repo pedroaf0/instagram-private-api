@@ -2,7 +2,7 @@ import { Feed } from '../core/feed';
 import { Expose } from 'class-transformer';
 import { ClipsFeedResponseItemsItem, ClipsFeedResponseRootObject } from '../responses/clips.feed.response';
 
-export class ClipsFeed extends Feed<ClipsFeedResponseRootObject, ClipsFeedResponseItemsItem> {
+export class ClipsUserFeed extends Feed<ClipsFeedResponseRootObject, ClipsFeedResponseItemsItem> {
   targetUserId: string;
 
   @Expose()
@@ -11,7 +11,7 @@ export class ClipsFeed extends Feed<ClipsFeedResponseRootObject, ClipsFeedRespon
   protected set state(response: ClipsFeedResponseRootObject) {
     this.moreAvailable = response.paging_info.more_available;
     this.maxId = response.paging_info.max_id;
-  }
+  } 
 
   async request(): Promise<ClipsFeedResponseRootObject> {
     const { body } = await this.client.request.send({

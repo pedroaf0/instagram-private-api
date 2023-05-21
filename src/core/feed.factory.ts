@@ -30,7 +30,7 @@ import {
   IgtvChannelFeed,
   LikedFeed,
   TopicalExploreFeed,
-  ClipsFeed,
+  ClipsUserFeed,
 } from '../feeds';
 import { DirectInboxFeedResponseThreadsItem } from '../responses';
 import { plainToClassFromExist } from 'class-transformer';
@@ -326,8 +326,8 @@ export class FeedFactory {
     return plainToClassFromExist(new TopicalExploreFeed(this.client), options);
   }
 
-  public clips(id: string | number) {
-    return plainToClassFromExist(new ClipsFeed(this.client), {
+  public clipsUser(id: string | number) {
+    return plainToClassFromExist(new ClipsUserFeed(this.client), {
       targetUserId: id,
     });
   }
