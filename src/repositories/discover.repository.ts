@@ -16,11 +16,29 @@ export class DiscoverRepository extends Repository {
     return body;
   }
 
-  async testClips(): Promise<any> {
+  async clipsHome(): Promise<any> {
     const { body } = await this.client.request.send({
       url: '/api/v1/clips/home/',
       form: {
-        module: 'explore_popular_major_unit',
+        max_id: undefined,
+        seen_reels: [],
+        container_module: 'explore_popular_major_unit',
+        _csrftoken: this.client.state.cookieCsrfToken,
+        _uuid: this.client.state.uuid,
+      },
+      method: 'POST',
+    });
+    return body;
+  }
+
+  async clipsDiscover(): Promise<any> {
+    const { body } = await this.client.request.send({
+      url: '/api/v1/clips/discover/',
+      form: {
+        max_id: undefined,
+        seen_reels: [],
+        container_module: 'clips_viewer_clips_tab',
+        should_refetch_chaining_media: false,
         _csrftoken: this.client.state.cookieCsrfToken,
         _uuid: this.client.state.uuid,
       },
