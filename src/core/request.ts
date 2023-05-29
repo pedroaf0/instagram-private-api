@@ -1,4 +1,4 @@
-import _, { defaultsDeep, inRange, random } from 'lodash';
+import { defaultsDeep, inRange, random, isObject } from 'lodash';
 import { createHmac } from 'crypto';
 import { Subject } from 'rxjs';
 import { AttemptOptions, retry } from '@lifeomic/attempt';
@@ -78,9 +78,9 @@ export class Request {
     Request.requestDebug
       (`Requesting ${options.method} ${options.url || options.uri || '[could not find url]'} 
       headers=${JSON.stringify(headers)} 
-      params=${_.isObject(qs) ? JSON.stringify(qs) : ''}
-      form=${_.isObject(form) ? JSON.stringify(form) : ''}
-      body=${_.isObject(body) ? JSON.stringify(body) : ''}
+      params=${isObject(qs) ? JSON.stringify(qs) : ''}
+      form=${isObject(form) ? JSON.stringify(form) : ''}
+      body=${isObject(body) ? JSON.stringify(body) : ''}
       `);
     const response = await this.faultTolerantRequest(options);
     this.updateState(response);
