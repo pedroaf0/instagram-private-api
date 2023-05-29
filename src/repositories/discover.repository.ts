@@ -38,7 +38,6 @@ export class DiscoverRepository extends Repository {
         max_id: undefined,
         seen_reels: [],
         container_module: 'clips_viewer_clips_tab',
-        should_refetch_chaining_media: false,
         _csrftoken: this.client.state.cookieCsrfToken,
         _uuid: this.client.state.uuid,
       },

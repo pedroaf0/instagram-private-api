@@ -1,4 +1,4 @@
-import { defaultsDeep, inRange, random } from 'lodash';
+import _, { defaultsDeep, inRange, random } from 'lodash';
 import { createHmac } from 'crypto';
 import { Subject } from 'rxjs';
 import { AttemptOptions, retry } from '@lifeomic/attempt';
@@ -73,7 +73,15 @@ export class Request {
       },
       this.defaults,
     );
-    Request.requestDebug(`Requesting ${options.method} ${options.url || options.uri || '[could not find url]'}`);
+
+    const { headers, form, qs, body } = options;
+    Request.requestDebug
+      (`Requesting ${options.method} ${options.url || options.uri || '[could not find url]'} 
+      headers=${JSON.stringify(headers)} 
+      params=${_.isObject(qs) ? JSON.stringify(qs) : ''}
+      form=${_.isObject(form) ? JSON.stringify(form) : ''}
+      body=${_.isObject(body) ? JSON.stringify(body) : ''}
+      `);
     const response = await this.faultTolerantRequest(options);
     this.updateState(response);
     process.nextTick(() => this.end$.next());
@@ -91,6 +99,11 @@ export class Request {
       'ig-set-authorization': auth,
       'ig-set-password-encryption-key-id': pwKeyId,
       'ig-set-password-encryption-pub-key': pwPubKey,
+      'ig-set-x-mid': mid,
+      'ig-set-ig-u-ds-user-id': userId,
+      'ig-set-ig-u-rur': rur,
+      'ig-set-ig-u-shbts': shbts,
+      'ig-set-ig-u-ig-direct-region-hint': region,
     } = response.headers;
     if (typeof wwwClaim === 'string') {
       this.client.state.igWWWClaim = wwwClaim;
@@ -103,6 +116,24 @@ export class Request {
     }
     if (typeof pwPubKey === 'string') {
       this.client.state.passwordEncryptionPubKey = pwPubKey;
+    }
+    if (typeof mid === 'string') {
+      this.client.state.mid = mid;
+    }
+    if (typeof userId === 'string') {
+      this.client.state.userId = userId.toString();
+    }
+    if (typeof mid === 'string') {
+      this.client.state.mid = mid;
+    }
+    if (typeof rur === 'string') {
+      this.client.state.rur = rur;
+    }
+    if (typeof shbts === 'string') {
+      this.client.state.shbits = shbts;
+    }
+    if (typeof region === 'string') {
+      this.client.state.region = region;
     }
   }
 
@@ -199,7 +230,7 @@ export class Request {
         typeof this.client.state.euDCEnabled === 'undefined' ? void 0 : this.client.state.euDCEnabled.toString(),
       'X-IG-Extended-CDN-Thumbnail-Cache-Busting-Value': this.client.state.thumbnailCacheBustingValue.toString(),
       'X-Bloks-Version-Id': this.client.state.bloksVersionId,
-      'X-MID': this.client.state.extractCookie('mid')?.value,
+      'X-MID': this.client.state.mid || this.client.state.extractCookie('mid')?.value,
       'X-IG-WWW-Claim': this.client.state.igWWWClaim || '0',
       'X-Bloks-Is-Layout-RTL': this.client.state.isLayoutRTL.toString(),
       'X-IG-Connection-Type': this.client.state.connectionTypeHeader,
@@ -209,11 +240,30 @@ export class Request {
       'X-IG-Android-ID': this.client.state.deviceId,
       'Accept-Language': this.client.state.language.replace('_', '-'),
       'X-FB-HTTP-Engine': 'Liger',
-      //'X-Google-AD-ID': '',
       Authorization: this.client.state.authorization,
       Host: 'i.instagram.com',
       'Accept-Encoding': 'gzip',
       Connection: 'close',
+      'ig-intended-user-id': this.client.state.userId ? this.client.state.userId : 0,
+      'ig-u-ds-user-id': this.client.state.userId ? this.client.state.userId : undefined,
+      'ig-u-shbts': this.client.state.shbits ? this.client.state.shbits : undefined,
+      'ig-u-rur': this.client.state.rur ? this.client.state.rur : undefined,
+      'ig-u-ig-direct-region-hint': this.client.state.region ? this.client.state.region : undefined,
+      // 'X-IG-Nav-Chain'
     };
+  }
+
+  public setHeaders(headers, username: string) {
+    //Username for generate device | uniq device
+    if (username) {
+      this.client.state.generateDevice(username);
+      this.client.state.authorization = headers.Authorization ? headers.Authorization : undefined;
+      this.client.state.userId = headers['ig-u-ds-user-id'] ? headers['ig-u-ds-user-id'] : undefined;
+      this.client.state.rur = headers['ig-u-rur'] ? headers['ig-u-rur'] : undefined;
+      this.client.state.mid = headers['X-MID'] ? headers['X-MID'] : undefined;
+      this.client.state.igWWWClaim = headers['X-IG-WWW-Claim'] ? headers['X-IG-WWW-Claim'] : undefined;
+      return true;
+    }
+    return false;
   }
 }

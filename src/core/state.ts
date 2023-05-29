@@ -64,7 +64,7 @@ export class State {
   language: string = 'en_US';
   timezoneOffset: string = String(new Date().getTimezoneOffset() * -60);
   radioType = 'wifi-none';
-  capabilitiesHeader = '3brTvwE=';
+  capabilitiesHeader = '3brTvx0=';
   connectionTypeHeader = 'WIFI';
   isLayoutRTL: boolean = false;
   euDCEnabled?: boolean = undefined;
@@ -78,6 +78,11 @@ export class State {
   build: string;
   uuid: string;
   phoneId: string;
+  userId: string;
+  rur: string;
+  shbits: string;
+  mid: string;
+  region: any;
   /**
    * Google Play Advertising ID.
    *
@@ -100,6 +105,7 @@ export class State {
   challenge: ChallengeStateResponse | null = null;
   clientSessionIdLifetime: number = 1200000;
   pigeonSessionIdLifetime: number = 1200000;
+  customagent: string | null = null;
 
   /**
    * The current application session ID.
@@ -118,6 +124,9 @@ export class State {
   }
 
   public get appUserAgent() {
+    if (this.customagent) {
+      return this.customagent;
+    }
     return `Instagram ${this.appVersion} Android (${this.deviceString}; ${this.language}; ${this.appVersionCode})`;
   }
 
@@ -166,6 +175,9 @@ export class State {
   }
 
   public get cookieUserId() {
+    if (this.userId) {
+      return this.userId;
+    }
     return this.extractCookieValue('ds_user_id');
   }
 
