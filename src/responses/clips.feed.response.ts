@@ -1,6 +1,6 @@
 export interface ClipsFeedResponseRootObject {
-    id: string;
-    items: ClipsFeedResponseItemsItem[];
+    id?: string;
+    items: ClipsFeedResponseItems[];
     paging_info: {
       more_available: boolean;
       max_id: string;
@@ -8,75 +8,78 @@ export interface ClipsFeedResponseRootObject {
     status: string;
   }
   
-  export interface ClipsFeedResponseItemsItem {
-    media: {
-      taken_at: number;
-      pk: string;
-      id: string;
-      device_timestamp: number | string;
-      media_type: number;
-      code: string;
-      client_cache_key: string;
-      filter_type: number;
-      is_unified_video: boolean;
-      should_request_ads: boolean;
-      caption_is_edited: boolean;
-      like_and_view_counts_disabled: boolean;
-      commerciality_status: string;
-      is_paid_partnership: boolean;
-      is_visual_reply_commenter_notice_enabled: boolean;
-      has_delayed_metadata: boolean;
-      comment_likes_enabled: boolean;
-      comment_threading_enabled: boolean;
-      has_more_comments: boolean;
-      next_max_id: string;
-      max_num_visible_preview_comments: number;
-      preview_comments: ClipsFeedResponsePreviewCommentsItem[];
-      can_view_more_preview_comments: boolean;
-      comment_count: number;
-      hide_view_all_comment_entrypoint: boolean;
-      image_versions2: ClipsFeedResponseImage_versions2;
-      original_width: number;
-      original_height: number;
-      user: ClipsFeedResponseUser_dict;
-      can_viewer_reshare: boolean;
-      like_count: number;
-      photo_of_you: boolean;
-      is_organic_product_tagging_eligible: boolean;
-      can_see_insights_as_brand: boolean;
-      video_subtitles_confidence: string;
-      is_dash_eligible: number;
-      video_dash_manifest: string;
-      video_codec: string;
-      number_of_qualities: number;
-      video_versions: ClipsFeedResponseVideoVersionsItem[];
-      has_audio: boolean;
-      video_duration: number;
-      view_count: number;
-      play_count: number;
-      caption: ClipsFeedResponseCaption;
-      comment_inform_treatment: {
-        should_have_inform_treatment: boolean;
-        text: string;
-        url: string | null;
-        action_type: string | null;
-      };
-      sharing_friction_info: {
-        should_have_sharing_friction: boolean;
-        bloks_app_url: string | null;
-        sharing_friction_payload: string | null;
-      };
-      can_viewer_save: boolean;
-      is_in_profile_grid: boolean;
-      profile_grid_control_enabled: boolean;
-      organic_tracking_token: string;
-      has_shared_to_fb: boolean;
-      product_type: string;
-      deleted_reason: number;
-      integrity_review_decision: string;
-      logging_info_token: string;
-    };
+  export interface ClipsFeedResponseItems {
+    media: ClipsFeedResponseItem;
   }
+
+  export interface ClipsFeedResponseItem {
+    taken_at: number;
+    pk: string;
+    id: string;
+    device_timestamp: number | string;
+    media_type: number;
+    code: string;
+    client_cache_key: string;
+    filter_type: number;
+    is_unified_video: boolean;
+    should_request_ads: boolean;
+    caption_is_edited: boolean;
+    like_and_view_counts_disabled: boolean;
+    commerciality_status: string;
+    is_paid_partnership: boolean;
+    is_visual_reply_commenter_notice_enabled: boolean;
+    has_delayed_metadata: boolean;
+    comment_likes_enabled: boolean;
+    comment_threading_enabled: boolean;
+    has_more_comments: boolean;
+    next_max_id: string;
+    max_num_visible_preview_comments: number;
+    preview_comments: ClipsFeedResponsePreviewCommentsItem[];
+    can_view_more_preview_comments: boolean;
+    comment_count: number;
+    hide_view_all_comment_entrypoint: boolean;
+    image_versions2: ClipsFeedResponseImage_versions2;
+    original_width: number;
+    original_height: number;
+    user: ClipsFeedResponseUser_dict;
+    can_viewer_reshare: boolean;
+    like_count: number;
+    photo_of_you: boolean;
+    is_organic_product_tagging_eligible: boolean;
+    can_see_insights_as_brand: boolean;
+    video_subtitles_confidence: string;
+    is_dash_eligible: number;
+    video_dash_manifest: string;
+    video_codec: string;
+    number_of_qualities: number;
+    video_versions: ClipsFeedResponseVideoVersionsItem[];
+    has_audio: boolean;
+    has_liked: boolean;
+    video_duration: number;
+    view_count: number;
+    play_count: number;
+    caption: ClipsFeedResponseCaption;
+    comment_inform_treatment: {
+      should_have_inform_treatment: boolean;
+      text: string;
+      url: string | null;
+      action_type: string | null;
+    };
+    sharing_friction_info: {
+      should_have_sharing_friction: boolean;
+      bloks_app_url: string | null;
+      sharing_friction_payload: string | null;
+    };
+    can_viewer_save: boolean;
+    is_in_profile_grid: boolean;
+    profile_grid_control_enabled: boolean;
+    organic_tracking_token: string;
+    has_shared_to_fb: boolean;
+    product_type: string;
+    deleted_reason: number;
+    integrity_review_decision: string;
+    logging_info_token: string;
+  };
   
   export interface ClipsFeedResponsePreviewCommentsItem {
     pk: string;
@@ -212,4 +215,6 @@ export interface ClipsFeedResponseRootObject {
     share_enabled: boolean;
     media_id: string;
     has_translation: boolean;
+    is_covered: boolean;
+    is_rank_comment: boolean;
   }

@@ -1,0 +1,1 @@
+export type ClipsFeedModule = 'clips_viewer_clips_tab' | 'explore_popular_major_unit';

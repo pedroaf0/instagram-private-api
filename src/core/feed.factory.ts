@@ -31,11 +31,13 @@ import {
   LikedFeed,
   TopicalExploreFeed,
   ClipsUserFeed,
+  ClipsDiscoverFeed,
+  ClipsHomeFeed,
 } from '../feeds';
 import { DirectInboxFeedResponseThreadsItem } from '../responses';
 import { plainToClassFromExist } from 'class-transformer';
 import * as Chance from 'chance';
-import { PostsInsightsFeedOptions, TimelineFeedReason, IgAppModule } from '../types';
+import { PostsInsightsFeedOptions, TimelineFeedReason, IgAppModule, ClipsFeedModule } from '../types';
 import { UserStoryFeed } from '../feeds/user-story.feed';
 import { ListReelMediaViewerFeed } from '../feeds/list-reel-media-viewer.feed';
 import { MediaInlineChildCommentsFeed } from '../feeds/media.inline-child-comments.feed';
@@ -330,5 +332,13 @@ export class FeedFactory {
     return plainToClassFromExist(new ClipsUserFeed(this.client), {
       targetUserId: id,
     });
+  }
+
+  public clipsDiscover(options: Partial<Pick<ClipsDiscoverFeed, 'module'>> = {}) {
+    return plainToClassFromExist(new ClipsDiscoverFeed(this.client), options);
+  }
+
+  public clipsHome(options: Partial<Pick<ClipsHomeFeed, 'module'>> = {}) {
+    return plainToClassFromExist(new ClipsHomeFeed(this.client), options);
   }
 }
