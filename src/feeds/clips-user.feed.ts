@@ -1,8 +1,8 @@
 import { Feed } from '../core/feed';
 import { Expose } from 'class-transformer';
-import { ClipsFeedResponseItems, ClipsFeedResponseRootObject } from '../responses/clips.feed.response';
+import { ClipsFeedResponseItem, ClipsFeedResponseRootObject } from '../responses/clips.feed.response';
 
-export class ClipsUserFeed extends Feed<ClipsFeedResponseRootObject, ClipsFeedResponseItems> {
+export class ClipsUserFeed extends Feed<ClipsFeedResponseRootObject, ClipsFeedResponseItem> {
   targetUserId: string;
 
   @Expose()
@@ -11,7 +11,7 @@ export class ClipsUserFeed extends Feed<ClipsFeedResponseRootObject, ClipsFeedRe
   protected set state(response: ClipsFeedResponseRootObject) {
     this.moreAvailable = response.paging_info.more_available;
     this.maxId = response.paging_info.max_id;
-  } 
+  }
 
   async request(): Promise<ClipsFeedResponseRootObject> {
     const { body } = await this.client.request.send({
@@ -28,7 +28,7 @@ export class ClipsUserFeed extends Feed<ClipsFeedResponseRootObject, ClipsFeedRe
     return body;
   }
 
-  async items(): Promise<ClipsFeedResponseItems[]> {
+  async items(): Promise<ClipsFeedResponseItem[]> {
     const res = await this.request();
     return res.items;
   }
