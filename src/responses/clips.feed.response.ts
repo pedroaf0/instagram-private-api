@@ -9,10 +9,10 @@ export interface ClipsFeedResponseRootObject {
   }
   
   export interface ClipsFeedResponseItems {
-    media: ClipsFeedResponseItem;
+    media: ClipsFeedResponseItemMedia;
   }
 
-  export interface ClipsFeedResponseItem {
+  export interface ClipsFeedResponseItemMedia {
     taken_at: number;
     pk: string;
     id: string;

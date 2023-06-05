@@ -1,9 +1,9 @@
 import { Feed } from '../core/feed';
 import { Expose } from 'class-transformer';
-import { ClipsFeedResponseItems, ClipsFeedResponseRootObject } from '../responses/clips.feed.response';
+import { ClipsFeedResponseItem, ClipsFeedResponseRootObject } from '../responses/clips.feed.response';
 import { ClipsFeedModule } from '../types/clips.options'
 
-export class ClipsHomeFeed extends Feed<ClipsFeedResponseRootObject, ClipsFeedResponseItems> {
+export class ClipsHomeFeed extends Feed<ClipsFeedResponseRootObject, ClipsFeedResponseItem> {
   module: ClipsFeedModule = 'clips_viewer_clips_tab';
   @Expose()
   private maxId?: string;
@@ -35,7 +35,7 @@ export class ClipsHomeFeed extends Feed<ClipsFeedResponseRootObject, ClipsFeedRe
       return body;
   }
 
-  async items(seenReels: string[] = []): Promise<ClipsFeedResponseItems[]> {
+  async items(seenReels: string[] = []): Promise<ClipsFeedResponseItem[]> {
     const res = await this.request(seenReels);
     return res.items;
   }

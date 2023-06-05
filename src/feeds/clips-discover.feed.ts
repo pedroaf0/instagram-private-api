@@ -1,9 +1,9 @@
 import { Feed } from '../core/feed';
 import { Expose } from 'class-transformer';
-import { ClipsFeedResponseItems, ClipsFeedResponseRootObject } from '../responses/clips.feed.response';
+import { ClipsFeedResponseItem, ClipsFeedResponseRootObject } from '../responses/clips.feed.response';
 import { ClipsFeedModule } from '../types/clips.options'
 
-export class ClipsDiscoverFeed extends Feed<ClipsFeedResponseRootObject, ClipsFeedResponseItems> {
+export class ClipsDiscoverFeed extends Feed<ClipsFeedResponseRootObject, ClipsFeedResponseItem> {
   module: ClipsFeedModule = 'explore_popular_major_unit';
   @Expose()
   private maxId?: string;
@@ -35,7 +35,7 @@ export class ClipsDiscoverFeed extends Feed<ClipsFeedResponseRootObject, ClipsFe
       return body;
   }
 
-  async items(seenReels: string[] = []): Promise<ClipsFeedResponseItems[]> {
+  async items(seenReels: string[] = []): Promise<ClipsFeedResponseItem[]> {
     const res = await this.request(seenReels);
     return res.items;
   }
