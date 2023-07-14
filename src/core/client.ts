@@ -39,6 +39,7 @@ import { AddressBookRepository } from '../repositories/address-book.repository';
 import { StatusRepository } from '../repositories/status.repository';
 import { IgtvRepository } from '../repositories/igtv.repository';
 import { ClipsRepository } from '../repositories/clips.repository';
+import { SessionRepository } from '../repositories/session.repository';
 
 export class IgApiClient {
   public state = new State();
@@ -77,6 +78,7 @@ export class IgApiClient {
   public restrictAction = new RestrictActionRepository(this);
   public addressBook = new AddressBookRepository(this);
   public status = new StatusRepository(this);
+  public session = new SessionRepository(this);
   public igtv = new IgtvRepository(this);
   /* Services */
   public publish = new PublishService(this);
