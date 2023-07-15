@@ -1,10 +1,10 @@
 export interface LoginActivityResponse {
-  sessions: LoginActivityResponseSession[];
-  suspicious_logins: LoginActivityResponseSuspiciousLogin[];
+  sessions: LoginActivitySession[];
+  suspicious_logins: LoginActivitySuspiciousSession[];
   status: string;
 }
 
-export interface LoginActivityResponseSuspiciousLogin {
+export interface LoginActivitySuspiciousSession {
   id: string;
   location: string;
   latitude: number;
@@ -15,7 +15,7 @@ export interface LoginActivityResponseSuspiciousLogin {
   ip_address: string;
 }
 
-export interface LoginActivityResponseSession extends LoginActivityResponseSuspiciousLogin {
+export interface LoginActivitySession extends LoginActivitySuspiciousSession {
   login_timestamp: number;
   is_current: boolean;
   login_id: string;
