@@ -1,7 +1,8 @@
 import { Repository } from '../core/repository';
+import { LoginActivityResponse } from '../responses/session.response';
 
 export class SessionRepository extends Repository {
-  public async getLoginActivity() {
+  public async getLoginActivity(): Promise<LoginActivityResponse> {
     const { body } = await this.client.request.send({
       method: 'GET',
       url: '/api/v1/session/login_activity/',

@@ -1,10 +1,9 @@
 import { Repository } from '../core/repository';
 
 export class ClipsRepository extends Repository {
-
-  async seen(reels: string[]) {
+  public async seen(reels: string[]) {
     const finalSeenReelse = reels.map(id => {
-        return { id };
+      return { id };
     });
     //include media pk array
     const { body } = await this.client.request.send({
@@ -12,11 +11,10 @@ export class ClipsRepository extends Repository {
       method: 'POST',
       form: this.client.request.sign({
         impressions: JSON.stringify(finalSeenReelse),
-        _uuid:this.client.state.uuid
+        _uuid: this.client.state.uuid,
       }),
     });
- 
+
     return body;
   }
-
 }
