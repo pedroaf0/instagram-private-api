@@ -26,7 +26,7 @@ export class SessionRepository extends Repository {
     return body;
   }
 
-  public async undiwAvowLogin(loginId: string) {
+  public async undoAvowLogin(loginId: string) {
     const { body } = await this.client.request.send({
       method: 'POST',
       url: '/api/v1/session/login_activity/undo_avow_login/',
