@@ -30,6 +30,9 @@ import {
   IgtvChannelFeed,
   LikedFeed,
   TopicalExploreFeed,
+  ClipsUserFeed,
+  ClipsDiscoverFeed,
+  ClipsHomeFeed,
 } from '../feeds';
 import { DirectInboxFeedResponseThreadsItem } from '../responses';
 import { plainToClassFromExist } from 'class-transformer';
@@ -323,5 +326,19 @@ export class FeedFactory {
     options: Partial<Pick<TopicalExploreFeed, 'sessionId' | 'clusterId' | 'lat' | 'lng' | 'module'>> = {},
   ): TopicalExploreFeed {
     return plainToClassFromExist(new TopicalExploreFeed(this.client), options);
+  }
+
+  public clipsUser(id: string | number) {
+    return plainToClassFromExist(new ClipsUserFeed(this.client), {
+      targetUserId: id,
+    });
+  }
+
+  public clipsDiscover(options: Partial<Pick<ClipsDiscoverFeed, 'module'>> = {}) {
+    return plainToClassFromExist(new ClipsDiscoverFeed(this.client), options);
+  }
+
+  public clipsHome(options: Partial<Pick<ClipsHomeFeed, 'module'>> = {}) {
+    return plainToClassFromExist(new ClipsHomeFeed(this.client), options);
   }
 }

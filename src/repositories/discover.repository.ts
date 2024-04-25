@@ -16,6 +16,36 @@ export class DiscoverRepository extends Repository {
     return body;
   }
 
+  async clipsHome(): Promise<any> {
+    const { body } = await this.client.request.send({
+      url: '/api/v1/clips/home/',
+      form: {
+        max_id: undefined,
+        seen_reels: [],
+        container_module: 'explore_popular_major_unit',
+        _csrftoken: this.client.state.cookieCsrfToken,
+        _uuid: this.client.state.uuid,
+      },
+      method: 'POST',
+    });
+    return body;
+  }
+
+  async clipsDiscover(): Promise<any> {
+    const { body } = await this.client.request.send({
+      url: '/api/v1/clips/discover/',
+      form: {
+        max_id: undefined,
+        seen_reels: [],
+        container_module: 'clips_viewer_clips_tab',
+        _csrftoken: this.client.state.cookieCsrfToken,
+        _uuid: this.client.state.uuid,
+      },
+      method: 'POST',
+    });
+    return body;
+  }
+
   async topicalExplore() {
     const { body } = await this.client.request.send({
       url: '/api/v1/discover/topical_explore/',
@@ -27,6 +57,16 @@ export class DiscoverRepository extends Repository {
         session_id: this.client.state.clientSessionId,
         include_fixed_destinations: false,
       },
+    });
+    return body;
+  }
+
+  async reportExploreMedia(mediaId: string) {
+    const { body } = await this.client.request.send({
+      url: '/api/v1/discover/explore_report/',
+      qs: {
+        m_pk: mediaId,
+      }
     });
     return body;
   }
